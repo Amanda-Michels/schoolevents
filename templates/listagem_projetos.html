@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Projetos - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header" style="flex-wrap:wrap;">
+    <div class="header-left">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="mini-logo">
+        <div><span class="brand-text">SchoolEvents</span></div>
+    </div>
+    <div class="header-right">
+        <span class="badge-role">Administrador</span>
+        <a href="{{ url_for('logout') }}" class="btn-exit">Sair</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="content-header">
+        <div style="width:100%;">
+            <h1 class="main-title">Listagem de Projetos</h1>
+            <p class="welcome-text">Todos os projetos registados na base de dados</p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
+                <div style="margin-left:auto; display:flex; flex-direction:column; gap:10px;">
+                    <a href="{{ url_for('painel_admin') }}" class="btn-yellow-create" style="padding:8px 12px; font-size:14px;">
+                        Voltar ao Painel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events-grid">
+
+        {% for projeto in projetos %}
+
+        <div class="event-card">
+
+            <div class="card-accent-bar" style="background:#4a4fef;"></div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:5px;">
+                <h2 class="event-title">{{ projeto.titulo_proj }}</h2>
+
+                {% if projeto.estado == "aprovado" %}
+                <span style="font-size:0.8rem; color:#38a169; font-weight:600;">
+                    ✔ Aprovado
+                </span>
+
+                {% elif projeto.estado == "rejeitado" %}
+                <span style="font-size:0.8rem; color:#e53e3e; font-weight:600;">
+                    ✖ Rejeitado
+                </span>
+
+                {% elif projeto.estado == "pendente" %}
+                <span style="font-size:0.8rem; color:#d69e2e; font-weight:600;">
+                    ⏳ Pendente
+                </span>
+                {% endif %}
+            </div>
+
+            <p class="instructor-tag">
+                <i class="fas fa-chalkboard-teacher"></i>
+                {{ projeto.professor_email if projeto.professor_email else 'Sem professor' }}
+            </p>
+
+            <p class="event-desc">{{ projeto.descricao_proj }}</p>
+
+            <div class="info-badges-list">
+
+                <div class="badge-row blue-light">
+                    <i class="far fa-calendar"></i>
+                    {{ projeto.data_proj }} às {{ projeto.horario_proj }}
+                </div>
+
+                <div class="badge-row green-light">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ projeto.local_proj }}
+                </div>
+
+                <div class="badge-row purple-light">
+                    <i class="fas fa-signal"></i>
+                    {{ projeto.estado }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+<meta charset="UTF-8">
+<title>Acesso negado</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#f4f4f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+
+    background:white;
+    padding:40px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+
+}
+
+.erro{
+    color:red;
+    font-size:28px;
+    font-weight:bold;
+}
+
+</style>
+
+<script>
+
+setTimeout(function(){
+
+    window.location.href="/";
+
+},2000);
+
+</script>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<p class="erro">
+Utilizador não autorizado
+</p>
+
+<p>
+Redirecionando para login...
+</p>
+
+</div>
+
+</body>
+</html>

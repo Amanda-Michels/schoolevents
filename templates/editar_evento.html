@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Evento - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="center">
+    <div class="modal-card">
+        <header class="modal-header">
+            <h2>Alterar Evento</h2>
+        </header>
+            <form method="POST" class="modal-form">
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" value="{{ evento.titulo_proj }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea name="descricao" required style="width: 100%; border-radius: 12px; padding: 10px; border: 2px solid #eee;">{{ evento.descricao_proj }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Data</label>
+                <input type="date" name="data" value="{{ evento.data_proj }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Horário</label>
+                <input type="time" name="horario" value="{{ evento.horario_proj }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Local</label>
+                <input type="text" name="local" value="{{ evento.local_proj }}" required>
+            </div>
+
+            <button type="submit" class="btn-yellow-create" style="width: 100%; margin-top: 20px;">Guardar Alterações</button>
+        </form>
+        <a href="/painel_admin" class="back-link" style="display:block; margin-top:15px;">Cancelar</a>
+    </div>
+</body>
+</html>

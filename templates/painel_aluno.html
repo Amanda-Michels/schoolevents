@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="dashboard-body">
+    <header class="main-header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="mini-logo">
+            <div class="user-meta">
+                <span class="brand-text">SchoolEvents</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="badge-role" style="background: #3182ce; color: white;">Aluno</span>
+            <a href="{{ url_for('logout') }}" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-header">
+            <div class="title-group">
+                <h1 class="main-title">Painel do aluno</h1>
+                <p class="welcome-text"></strong> Explora e participa nos projetos.</p>
+                <div style="margin-left:auto; display:flex; flex-direction:column; gap:10px;">
+                    <a href="{{ url_for('minhas_duvidas') }}" class="btn-yellow-create" style="padding:8px 12px; font-size:14px;">
+                        Minhas dúvidas</a>
+                </div>
+                    <h5 class="warning">Próximos Eventos</h5>
+            </div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert-info" style="background: #ebf8ff; color: #3182ce; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="events-grid">
+        {% for evento in eventos %}
+        <div class="event-card">
+            <div class="card-accent-bar" style="background: #3182ce;"></div>
+                <h2 class="event-title">{{ evento.titulo_proj }}</h2>
+                <p class="instructor-tag">
+                <i class="fas fa-chalkboard-teacher"></i>{{ evento.professor_email }}</p>
+                <p class="event-desc">{{ evento.descricao_proj }}</p>
+
+            <div class="info-badges-list">
+                <div class="badge-row blue-light">
+                    <i class="far fa-calendar-alt"></i> &nbsp; {{ evento.data_proj }} às {{ evento.horario_proj }}
+                </div>
+                <div class="badge-row green-light">
+                    <i class="fas fa-map-marker-alt"></i> &nbsp; {{ evento.local_proj }}
+                </div>
+            </div>
+
+            <div class="card-footer-actions" style="flex-direction: column; gap: 15px; border-top: 1px solid #f1f5f9; padding-top: 20px;">          
+                {% if evento.inscrito > 0 %}
+                <form action="{{ url_for('desinscrever_evento', projeto_id=evento.id) }}" method="POST" style="width: 100%;">
+                    <button type="submit"
+                        onclick="return confirm('Tens a certeza que queres desistir deste evento?')"
+                        style="background: #d5f7d8; color: #57a548; border: 1px solid #baf1b7; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; font-weight: 700;">
+                        
+                        <i class="fas fa-check-circle"></i> Já estás inscrito
+                    </button>
+                </form>
+                {% elif evento.inscrito == 0 %}
+                    <a href="{{ url_for('inscrever_evento', projeto_id=evento.id) }}"
+                    style="width: 100%; justify-content: center; background: #3182ce; color: white; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700;">
+                        <i class="fas fa-user-plus"></i> Quero Participar
+                    </a>
+                {% endif %}
+                 
+                <form action="{{ url_for('enviar_duvida', projeto_id=evento.id) }}" method="POST" style="width: 100%; margin-top: 5px;">
+                    <p style="font-size: 0.8rem; font-weight: 700; color: #718096; margin-bottom: 8px;">Restou alguma dúvida?</p>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" name="pergunta" placeholder="Escreve aqui a tua pergunta..." required 
+                               style="flex: 1; padding: 10px 15px; border-radius: 12px; border: 1px solid #edf2f7; background: #f8fafc; outline: none; font-size: 0.9rem;">
+                        <button type="submit" class="btn-submit-black" style="padding: 10px 15px; margin: 0; width: auto; border-radius: 12px; background: #1a202c; color: white; border: none; cursor: pointer;">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #e2e8f0; margin-bottom: 20px;"></i>
+            <p style="color: #a0aec0;">Nenhum evento disponível no momento.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

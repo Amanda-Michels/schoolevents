@@ -1,0 +1,284 @@
+/* --- CONFIGURAÇÕES GERAIS --- */
+:root {
+    --primary: #1a202c;
+    --secondary: #316dd3; /* Amarelo SchoolEvents */
+    --bg-page: #f8fafc;
+    --white: #ffffff;
+    --text-muted: #718096;
+    --border-light: #f1f5f9;
+    
+    /* Cores dos Badges (Estilo Pastel) */
+    --blue-bg: #ebf8ff;
+    --blue-text: #3182ce;
+    --green-bg: #f0fff4;
+    --green-text: #38a169;
+    --purple-bg: #faf5ff;
+    --purple-text: #805ad5;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg-page);
+    margin: 0;
+    color: var(--primary);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 5%;
+    align-items: center;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.header-left { display: flex; align-items: center; gap: 12px; }
+.mini-logo { width: 40px; height: 40px; object-fit: contain; }
+.brand-text { font-weight: 800; font-size: 1.1rem; display: block; }
+.user-email-header { color: var(--text-muted); font-size: 0.85rem; }
+
+.badge-role {
+    background: #000;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-exit {
+    text-decoration: none;
+    color: var(--primary);
+    border: 1px solid #ddd;
+    padding: 6px 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-exit:hover { background: #f1f5f9; }
+
+/* --- DASHBOARD LAYOUT --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.main-title { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+.welcome-text { color: var(--text-muted); margin-top: 5px; font-size: 1.1rem; }
+
+
+/* --- BOTÃO CRIAR EVENTO --- */
+.btn-yellow-create {
+    background: var(--secondary);
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-yellow-create:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+/* --- GRID E CARDS --- */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.event-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover { transform: translateY(-5px); }
+
+.card-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 8px;
+    background: var(--secondary);
+    border-radius: 24px 24px 0 0;
+}
+
+.event-title { font-size: 1.6rem; font-weight: 700; margin: 15px 0 5px 0; }
+.instructor-tag { color: var(--text-muted); font-weight: 600; margin-bottom: 20px; font-size: 0.95rem; }
+.event-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; }
+
+/* --- BADGES COLORIDAS --- */
+.info-badges-list { display: flex; flex-direction: column; gap: 12px; }
+
+.badge-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.blue-light { background: var(--blue-bg); color: var(--blue-text); }
+.green-light { background: var(--green-bg); color: var(--green-text); }
+.purple-light { background: var(--purple-bg); color: var(--purple-text); }
+
+/* --- AÇÕES DO CARD --- */
+.card-footer-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.btn-small {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.btn-small:hover { background: #edf2f7; }
+
+/* --- ESTILO DO FORMULÁRIO (MODAL DESIGN) --- */
+.modal-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 550px;
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+}
+
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.modal-header h2 { margin: 0; font-size: 1.7rem; font-weight: 800; }
+.modal-subtitle { color: var(--text-muted); font-size: 1rem; margin-top: 5px; }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.form-group label { font-weight: 700; font-size: 0.95rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.modal-card input, .modal-card textarea {
+    background: #f7fafc;
+    border: 2px solid #edf2f7;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.modal-card input:focus { border-color: var(--secondary); background: #fff; }
+
+.btn-submit-black {
+    width: 100%;
+    background: #0a0b10;
+    color: #fff;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-submit-black:hover { filter: brightness(1.5); transform: translateY(-2px); }
+
+/* --- PÁGINA DE LOGIN --- */
+.card {
+    background: var(--white);
+    padding: 45px;
+    border-radius: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.input-field {
+    display: flex;
+    align-items: center;
+    background: #f7fafc;
+    border: 2px solid #edf2f7;
+    border-radius: 14px;
+    margin: 15px 0;
+    padding: 0 15px;
+}
+
+.input-field input {
+    border: none;
+    background: transparent;
+    padding: 15px;
+    width: 100%;
+    outline: none;
+}
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px; /* estilo pill */
+    font-size: 13px;
+    font-weight: 500;
+    margin: 8px 0;
+}
+
+/* Estados */
+.status-aprovado {
+    background-color: #e6f9ed;
+    color: #1f8f4e;
+}
+
+.status-rejeitado {
+    background-color: #fdecea;
+    color: #c0392b;
+}
+
+.status-pendente {
+    background-color: #fff8e1;
+    color: #b58105;
+}

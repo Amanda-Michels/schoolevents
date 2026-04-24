@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Utilizadores - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header" style="flex-wrap:wrap;">
+    <div class="header-left">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="mini-logo">
+        <div><span class="brand-text">SchoolEvents</span></div>
+    </div>
+    <div class="header-right">
+        <span class="badge-role">Administrador</span>
+        <a href="{{ url_for('logout') }}" class="btn-exit">Sair</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="content-header">
+        <div style="width:100%;">
+            <h1 class="main-title">Listagem de Utilizadores</h1>
+            <p class="welcome-text">Todos os utilizadores registados na base de dados</p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
+                <div style="margin-left:auto; display:flex; flex-direction:column; gap:10px;">
+                    <a href="{{ url_for('painel_admin') }}" class="btn-yellow-create" style="padding:8px 12px; font-size:14px;">
+                        Voltar ao Painel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events-grid">
+
+        {% for utilizador in utilizadores %}
+        {% set tipo = (utilizador.tipo_utilizador or '')|trim|lower %}
+        {% set auth = (utilizador.auth_provider or '')|trim|lower %}
+
+        <div class="event-card">
+
+            <div class="card-accent-bar" style="background:#4a4fef;"></div>
+
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                <p class="instructor-tag" style="margin:0; flex:1; word-break:break-word;">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    {{ utilizador.email }}
+                </p>
+
+                {% if tipo == "admin" %}
+                <span style="font-size:0.8rem; color:#e53e3e; font-weight:600; white-space:nowrap; flex-shrink:0;"> Admin</span>
+
+                {% elif tipo == "professor" %}
+                <span style="font-size:0.8rem; color:#4a4fef; font-weight:600; white-space:nowrap; flex-shrink:0;"> Professor</span>
+
+                {% elif tipo == "aluno" %}
+                <span style="font-size:0.8rem; color:#38a169; font-weight:600; white-space:nowrap; flex-shrink:0;"> Aluno</span>
+
+                {% else %}
+                <span style="font-size:0.8rem; color:#718096; font-weight:600; white-space:nowrap; flex-shrink:0;"> Indefinido</span>
+                        
+                {% endif %}
+            </div>
+
+            <div class="info-badges-list">
+
+                <div class="badge-row blue-light">
+                    <i class="fas fa-user"></i>
+                    {{ tipo if tipo else 'indefinido' }}
+                </div>
+
+                <div class="badge-row green-light">
+                    <i class="fas fa-sign-in-alt"></i>
+                    {{ auth if auth else 'indefinido' }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+</body>
+</html>

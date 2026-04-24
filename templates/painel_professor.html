@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Professor - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" class="mini-logo">
+            <div><span class="brand-text">SchoolEvents</span></div>
+        </div>
+        <div class="header-right">
+            <span class="badge-role">Professor</span>
+            <a href="{{ url_for('logout') }}" class="btn-exit">Sair</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-header">
+            <div>
+                <h1 class="main-title">Painel do Professor</h1>
+                <p class="welcome-text">Crie e explore novos projetos.</p>
+            </div>
+            <a href="{{ url_for('criar_evento') }}" class="btn-yellow-create">+ Criar Evento</a>
+        </div>
+
+        <div class="events-grid">
+            {% for evento in eventos %}
+            <div class="event-card">
+            <div class="card-accent-bar"></div>
+                <h2 class="event-title">{{ evento.titulo_proj }}</h2>
+                <p class="instructor-tag">● {{ nome_professor }}</p>
+
+            {% if evento.estado == "pendente" %}
+            <div class="status-badge status-pendente">
+                <i class="fas fa-exclamation-circle"></i> Pendente de aprovação
+            </div>
+
+            {% elif evento.estado == "aprovado" %}
+                <div class="status-badge status-aprovado">
+                    <i class="fas fa-check-circle"></i> Projeto aprovado
+                </div>
+
+            {% elif evento.estado == "rejeitado" %}
+                <div class="status-badge status-rejeitado">
+                    <i class="fas fa-times-circle"></i> Projeto rejeitado
+                </div>
+        {% endif %}
+            
+            <p class="event-desc">{{ evento.descricao_proj }}</p>
+
+            <div class="info-badges-list">
+                <div class="badge-row blue-light">
+                    <i class="far fa-calendar"></i> {{ evento.data_proj }} às {{ evento.horario_proj }}
+                </div>
+
+                <div class="badge-row green-light">
+                    <i class="fas fa-map-marker-alt"></i> {{ evento.local_proj }}
+                </div>
+
+                <div class="badge-row purple-light">
+                    <i class="fas fa-users"></i> {{ evento.total_inscritos }} participantes
+                </div>
+            </div>
+
+            <div class="card-footer-actions">
+                <a href="/projeto/{{ evento.id }}/inscritos" class="btn-small">Alunos</a>
+                <a href="/projeto/{{ evento.id }}/duvidas" class="btn-small">Dúvidas</a>
+
+                <form action="{{ url_for('apagar_evento_professor', id=evento.id) }}"
+                      method="POST"
+                      style="display:inline;">
+
+                    <button type="submit"
+                            class="btn-small"
+                            onclick="return confirm('Tem certeza que deseja apagar este evento?')">
+                        Apagar
+                    </button>
+
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 style="margin-top: 40px;">Projetos aprovados de outros professores</h2>
+
+    {% if eventos_outros %}
+    <div class="events-grid">
+        {% for evento in eventos_outros %}
+        <div class="event-card">
+            <div class="card-accent-bar"></div>
+                <h2 class="event-title">{{ evento.titulo_proj }}</h2>
+                <p class="instructor-tag">● Professor: {{ evento.professor_email }}</p>
+                <p class="event-desc">{{ evento.descricao_proj }}</p>
+            <div class="badge-row blue-light">
+                <i class="far fa-calendar"></i> {{ evento.data_proj }} às {{ evento.horario_proj }}
+            </div>
+            <div class="badge-row green-light">
+                <i class="fas fa-map-marker-alt"></i> {{ evento.local_proj }}
+            </div>
+        </div>
+        
+        {% endfor %}
+        {% else %}
+            <p>Não há projetos disponíveis.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

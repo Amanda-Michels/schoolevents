@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscritos - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+    <div class="container">
+        <div class="content-header">
+            <h1 class="main-title">Alunos Inscritos</h1>
+            {% if role == 'admin' %}
+                <a href="{{ url_for('painel_admin') }}" class="btn-exit">Voltar</a>
+            {% else %}
+                <a href="{{ url_for('painel_professor') }}" class="btn-exit">Voltar</a>
+            {% endif %}
+        </div>
+        <div class="event-card">
+            <div class="card-accent-bar" style="background: #805ad5;"></div>
+                <ul style="list-style: none; padding: 0;">
+                    {% for aluno in alunos %}
+                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <strong>Email:</strong> {{ aluno.email }}
+                </li>
+                    {% else %}
+                <p>Ainda não existem inscrições para este evento.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Dúvidas - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="mini-logo">
+        <div><span class="brand-text">SchoolEvents</span></div>
+    </div>
+    <div class="header-right">
+        <span class="badge-role">Aluno</span>
+        <a href="{{ url_for('logout') }}" class="btn-exit">Sair</a>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="content-header">
+        <div>
+            <h1 class="main-title">Minhas Dúvidas</h1>
+            <p class="welcome-text">Acompanhe as respostas dos professores</p>
+        </div>
+
+        <a href="{{ url_for('painel_aluno') }}" class="btn-yellow-create">
+            Voltar
+        </a>
+    </div>
+
+    <div class="events-grid">
+
+        {% for d in duvidas %}
+
+        <div class="event-card">
+
+            <div class="card-accent-bar"></div>
+
+            <h2 class="event-title">{{ d.titulo_proj }}</h2>
+
+            <p class="event-desc">
+                <strong>Pergunta:</strong><br>
+                {{ d.pergunta }}
+            </p>
+
+            <div class="info-badges-list">
+
+                <div class="badge-row blue-light">
+                    <i class="fas fa-calendar"></i>
+                    {{ d.data_envio }}
+                </div>
+
+            </div>
+
+            {% if d.resposta %}
+            <div class="badge-row green-light" style="margin-top:10px;">
+                <i class="fas fa-check-circle"></i>
+                {{ d.resposta }}
+            </div>
+            {% else %}
+            <div class="badge-row" style="margin-top:10px; background:#fef3c7;">
+                <i class="fas fa-clock"></i>
+                Aguardando resposta do professor
+            </div>
+            {% endif %}
+
+        </div>
+
+        {% else %}
+        <p>Não enviou nenhuma dúvida ainda.</p>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

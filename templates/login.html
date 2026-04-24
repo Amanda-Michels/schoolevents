@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - SchoolEvents</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="center">
+    <div class="card">
+        <div class="brand-side">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="SchoolEvents Logo" style="width: 200px; height: auto;">
+        </div>
+        <header>
+            <h2>Insira os seus dados de acesso</h2>
+        </header>
+
+        <form method="POST">
+        {% if erro %} <p style="color: red; font-size: 0.8rem;">{{ erro }}</p> {% endif %}
+        <div class="input-field">
+                <input name="email" type="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-field">
+                <input name="senha" type="password" placeholder="Palavra-passe" required>
+            </div>
+            <button type="submit">Entrar</button>
+            <br>
+            <br>
+            <p>Não tem conta?</p>
+            <a href="{{ url_for('criar_conta') }}">Criar conta</a>
+
+            <br><br>
+
+            <p>Ou</p>
+            <a href="{{ url_for('login') }}">Entrar com Google</a>
+         </form>
+    </div>
+</body>
+</html>

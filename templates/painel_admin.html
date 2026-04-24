@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Administrador - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header" style="flex-wrap:wrap;">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" class="mini-logo">
+            <div><span class="brand-text">SchoolEvents</span></div>
+        </div>
+        <div class="header-right">
+            <span class="badge-role">Administrador</span>
+            <a href="{{ url_for('logout') }}" class="btn-exit">Sair</a>
+        </div>
+    </header>
+
+<div class="container">
+    <div class="content-header">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; width:100%;">  
+            <div style="flex:1; min-width:220px;">
+                <h1 class="main-title">Painel do Administrador</h1>
+                <p class="welcome-text">Gerir projetos enviados pelos professores</p>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:15px;">
+                <div style="margin-left:auto; display:flex; flex-direction:column; gap:10px;">
+                    <a href="{{ url_for('listagem_projetos') }}" class="btn-yellow-create" style="padding:8px 12px; font-size:14px;">
+                        Listagem Projetos
+                    </a>
+                    <a href="{{ url_for('listagem_utilizadores') }}" class="btn-yellow-create" style="padding:8px 12px; font-size:14px;">
+                       Listagem Utilizadores
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events-grid">
+        {% for evento in eventos %}
+        <div class="event-card">
+        <div class="card-accent-bar" style="background:#4a4fef;"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:5px;">
+            <h2 class="event-title">{{ evento.titulo_proj }}</h2>
+            {% if evento.estado == "aprovado" %}
+                <span style="font-size:0.8rem; color:#38a169; font-weight:600;">
+                    ✔ Já está aprovado
+                </span>
+        {% endif %}
+    </div>
+
+        <p class="instructor-tag">
+            <i class="fas fa-chalkboard-teacher"></i>{{ evento.professor_email }}
+        </p>
+
+    <p class="event-desc">{{ evento.descricao_proj }}</p>
+    <div class="info-badges-list">
+
+    <div class="badge-row blue-light">
+    <i class="far fa-calendar"></i>{{ evento.data_proj }} às {{ evento.horario_proj }}</div>
+
+    <div class="badge-row green-light">
+    <i class="fas fa-map-marker-alt"></i>
+    {{ evento.local_proj }}
+    </div>
+
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+
+    {% if evento.estado == "pendente" %}
+
+        <a href="{{ url_for('aprovar_projeto', id=evento.id) }}"
+           class="btn-small"
+           style="background:#38a169;color:white; flex:1 1 120px; text-align:center;">
+            Aprovar
+        </a>
+
+        <a href="{{ url_for('rejeitar_projeto', id=evento.id) }}"
+           class="btn-small"
+           style="background:#e53e3e;color:white; flex:1 1 120px; text-align:center;">
+            Rejeitar
+        </a>
+
+    {% elif evento.estado == "aprovado" %}
+
+        <a href="{{ url_for('ver_inscritos', id=evento.id) }}"
+           class="btn-small"
+           style="flex:1 1 120px; text-align:center;">
+            Participantes
+        </a>
+
+        <a href="{{ url_for('editar_evento', id=evento.id) }}"
+           class="btn-small"
+           style="flex:1 1 120px; text-align:center;">
+            Editar
+        </a>
+
+        <form action="{{ url_for('apagar_evento_professor', id=evento.id) }}"
+              method="POST"
+              style="flex:1 1 120px;">
+            <button type="submit"
+                    class="btn-small"
+                    style="width:100%;"
+                    onclick="return confirm('Tem certeza que deseja apagar este evento?')">
+                Apagar
+            </button>
+        </form>
+
+    {% endif %}
+
+    </div>
+
+    </div>
+
+    {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

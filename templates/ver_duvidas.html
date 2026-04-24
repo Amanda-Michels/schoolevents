@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dúvidas - SchoolEvents</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+    <div class="container">
+        <div class="content-header">
+            <h1 class="main-title">Dúvidas Recebidas</h1>
+            <a href="{{ url_for('painel_professor') }}" class="btn-exit">Voltar</a>
+        </div>
+
+        <div class="events-grid">
+            {% for duvida in duvidas %}
+            <div class="event-card">
+                <p><strong>Dúvida:</strong> {{ duvida.pergunta }}</p>
+                {% if duvida.resposta %}
+                    <p style="color: #38a169;">
+                        <strong>Resposta:</strong> {{ duvida.resposta }}
+                    </p>
+                {% else %}
+                <form method="POST">
+                    <input type="hidden" name="duvida_id" value="{{ duvida.id }}">
+                    <textarea name="resposta" placeholder="Escreva a resposta..." required  
+                        style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 10px;">
+                    </textarea>
+
+                    <button type="submit" class="btn-submit-black" style="padding: 10px; margin-top: 10px;">
+                        Responder
+                    </button>
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

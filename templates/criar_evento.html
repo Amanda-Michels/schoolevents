@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Evento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="center">
+    <div class="modal-card">
+        <header class="modal-header">
+            <h2>Criar Novo Evento</h2>
+            <a href="{{ url_for('painel_professor') }}" style="text-decoration:none; color:#ffffff;">&times;</a>
+        </header>
+        <form method="POST" class="modal-form">
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" required>
+            </div>
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea name="descricao" id="descricao" maxlength="300" required></textarea>
+                <small id="contador">0 / 300</small>
+                
+                <script>
+                    const textarea = document.getElementById("descricao");
+                    const contador = document.getElementById("contador");
+                    
+                    textarea.addEventListener("input", function () {
+                        contador.textContent = `${textarea.value.length} / 300`;
+                    });
+                </script>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" id="dataEvento" name="data" required>
+                </div>
+                <div class="form-group">
+                    <label>Horário</label>
+                    <input type="time" name="horario" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Local</label>
+                <input type="text" name="local" required>
+            </div>
+            <button type="submit" class="btn-submit-black">Criar Evento</button>
+        
+            <a href="{{ url_for('painel_professor') }}" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Cancelar</a>
+        </form>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const inputData = document.getElementById("dataEvento");
+
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+
+    const dataMin = `${anoAtual}-01-01`;
+    const dataMax = `${anoAtual + 2}-12-31`;
+
+    inputData.min = dataMin;
+    inputData.max = dataMax;
+});
+</script>
+
+</body>
+</html>
